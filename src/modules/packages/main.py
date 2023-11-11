@@ -583,6 +583,17 @@ class PMYum(PackageManager):
 
     def update_system(self):
         check_target_env_call(["yum", "-y", "upgrade"])
+class PMmercury(PackageManager):
+    backend = "mercury"
+
+    def install(self, pkgs, from_local=False):
+        check_target_env_call(["printf", "y\n", "|", "mercury-install"] + pkgs)
+
+    def update_db(self):
+        check_target_env_call(["mercury-sync"])
+
+    def update_system(self):
+        check_target_env_call(["printf", "y\n", "|", "mercury-update"])
 
 
 class PMZypp(PackageManager):
